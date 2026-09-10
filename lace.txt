@@ -1,0 +1,40 @@
+(() => {
+  const report = () => {
+    const video = document.querySelector('video');
+
+    console.table({
+      visibility: document.visibilityState,
+      focused: document.hasFocus(),
+      hidden: document.hidden,
+      videoFound: !!video,
+      paused: video?.paused,
+      currentTime: video?.currentTime,
+      duration: video?.duration,
+      readyState: video?.readyState,
+      networkState: video?.networkState,
+      playbackRate: video?.playbackRate,
+      muted: video?.muted,
+      documentURL: location.href,
+    });
+  };
+
+  document.addEventListener("visibilitychange", () => {
+    console.log("Visibility changed:", document.visibilityState);
+    report();
+  });
+
+  window.addEventListener("blur", () => {
+    console.log("Window blur");
+    report();
+  });
+
+  window.addEventListener("focus", () => {
+    console.log("Window focus");
+    report();
+  });
+
+  setInterval(report, 2000);
+
+  console.log("Playback diagnostic started.");
+  report();
+})();
